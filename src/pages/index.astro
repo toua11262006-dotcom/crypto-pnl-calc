@@ -1,0 +1,27 @@
+---
+import Calculator from '../components/Calculator.tsx';
+const title = '仮想通貨 損益計算ツール｜税金もAIがザックリ解説';
+const description = 'ビットコインなど仮想通貨の1取引の損益・損益率・税金の概算を無料で計算。日本の雑所得・総合課税に対応し、結果をAIが平易に解説します。';
+---
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main>
+      <h1>仮想通貨 損益計算ツール</h1>
+      <p>買値・売値・数量を入れると、実現損益と日本の税金(雑所得・総合課税)の概算を計算します。結果はAIが平易に解説します。</p>
+      <Calculator client:load />
+      <footer>
+        <p class="disclaimer">
+          本ツールの計算結果はすべて概算であり、税務・投資の助言ではありません。
+          正確な損益計算・確定申告には専用ツールや税理士をご利用ください。
+        </p>
+        <p><a href="https://crypto-bot-blog.pages.dev/">仮想通貨・自動売買ボットの解説ブログ「ボット運用ラボ」はこちら</a></p>
+      </footer>
+    </main>
+  </body>
+</html>
