@@ -9,19 +9,107 @@ const description = 'ビットコインなど仮想通貨の1取引の損益・�
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <main>
-      <h1>仮想通貨 損益計算ツール</h1>
-      <p>買値・売値・数量を入れると、実現損益と日本の税金(雑所得・総合課税)の概算を計算します。結果はAIが平易に解説します。</p>
+      <header class="top">
+        <p class="badge">無料・登録なし</p>
+        <h1>仮想通貨の<em>損益と税金</em>を、<br />ザックリ計算。</h1>
+        <p class="lead">買値・売値・数量を入れると、実現損益と日本の税金（雑所得・総合課税）の目安がすぐ出ます。結果は AI がやさしい言葉で解説します。</p>
+      </header>
       <Calculator client:load />
       <footer>
         <p class="disclaimer">
           本ツールの計算結果はすべて概算であり、税務・投資の助言ではありません。
           正確な損益計算・確定申告には専用ツールや税理士をご利用ください。
         </p>
-        <p><a href="https://crypto-bot-blog.pages.dev/">仮想通貨・自動売買ボットの解説ブログ「ボット運用ラボ」はこちら</a></p>
+        <p class="links">
+          <a href="https://crypto-bot-blog.pages.dev/">仮想通貨・自動売買ボットの解説ブログ「ボット運用ラボ」</a>
+          <a href="https://toa-ai-dev.pages.dev/">このツールの作者（AIツール開発のご相談）</a>
+        </p>
       </footer>
     </main>
   </body>
 </html>
+
+<style is:global>
+  :root{
+    --paper:#fbf9f1; --grid:#e6e2d3; --ink:#1a1a1a; --mut:#5b5a55; --card:#ffffff;
+    --marker:#ffe14d; --red:#d4372b; --green:#1f7a5a;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:"Zen Kaku Gothic New","Yu Gothic UI","Hiragino Kaku Gothic ProN",sans-serif;
+    color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;
+    background-color:var(--paper);
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:24px 24px;
+  }
+  main{max-width:760px;margin:0 auto;padding:40px 16px 48px}
+  a{color:var(--ink)}
+
+  .top{margin-bottom:34px}
+  .badge{display:inline-block;background:var(--ink);color:var(--paper);font-size:13px;font-weight:700;padding:3px 12px;border-left:6px solid var(--marker);margin-bottom:16px}
+  h1{font-size:clamp(27px,6vw,44px);font-weight:900;line-height:1.35;word-break:auto-phrase}
+  h1 em{font-style:normal;background:linear-gradient(transparent 55%,var(--marker) 55%,var(--marker) 92%,transparent 92%)}
+  .lead{margin-top:14px;color:var(--mut);font-size:15.5px;word-break:auto-phrase}
+
+  /* 入力 */
+  .panel{background:var(--card);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:26px 24px 22px;position:relative}
+  .panel-title{position:absolute;top:-14px;left:18px;background:var(--marker);border:2px solid var(--ink);font-family:var(--mono);font-size:13px;font-weight:700;padding:0 10px;line-height:24px}
+  .fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px 18px}
+  .fields label{display:flex;flex-direction:column;gap:6px;font-size:13.5px;font-weight:700}
+  .fields label .opt{font-weight:400;color:var(--mut);font-size:12px;border:1px solid #cfcab8;padding:0 6px;margin-left:2px}
+  .fields input,.fields select{font:inherit;font-family:var(--mono);font-size:16px;font-weight:500;padding:10px 12px;border:2px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:0;width:100%;min-width:0}
+  .fields select{font-family:inherit;font-size:15px;appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 12px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:30px}
+  .fields input:focus,.fields select:focus{outline:none;background:#fffbe0;box-shadow:3px 3px 0 var(--marker)}
+  .fields input::placeholder{color:#b3ae9e}
+  .hint{margin-top:18px;font-size:14px;color:var(--mut);border-top:1.5px dashed #cfcab8;padding-top:14px}
+
+  /* 結果 */
+  .results{margin-top:38px}
+  .hero-num{background:var(--card);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:24px 130px 22px 24px;position:relative}
+  .hero-num.plus{color:var(--green)}
+  .hero-num.minus{color:var(--red)}
+  .hero-num .label{display:block;font-size:14px;font-weight:700;color:var(--mut)}
+  .hero-num .big{font-family:var(--mono);font-weight:700;font-size:clamp(30px,7.5vw,50px);line-height:1.2;margin-top:2px;word-break:break-all}
+  .hero-num .pct{display:inline-block;margin-top:10px;font-family:var(--mono);font-weight:700;font-size:14px;padding:0 10px;border:2px solid currentColor}
+  .stamp{position:absolute;right:22px;top:50%;width:92px;height:92px;margin-top:-46px;border-radius:50%;border:3px solid currentColor;display:grid;place-items:center;transform:rotate(-12deg);font-weight:900;font-size:21px;box-shadow:inset 0 0 0 3px var(--card),inset 0 0 0 5px currentColor;opacity:.85}
+
+  .sub{display:grid;grid-template-columns:1fr 1fr;margin-top:20px;border:2px solid var(--ink);background:var(--card)}
+  .sub>div{padding:16px 18px}
+  .sub>div+div{border-left:2px dashed var(--grid)}
+  .sub .label{display:block;font-size:13px;color:var(--mut);font-weight:700}
+  .sub .v{font-family:var(--mono);font-weight:700;font-size:24px;line-height:1.4}
+  .sub .v.tax{box-shadow:inset 0 -.4em 0 var(--marker)}
+  .sub .detail{display:block;font-size:12.5px;color:var(--mut);margin-top:4px}
+  .note{margin-top:14px;font-size:13px;color:var(--mut)}
+  .results .disclaimer{margin-top:6px;font-size:12.5px;color:var(--mut)}
+
+  .ai{margin-top:28px}
+  .ai button{font:inherit;font-weight:900;font-size:16px;cursor:pointer;padding:14px 28px;background:var(--ink);color:var(--paper);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--marker);transition:transform .12s,box-shadow .12s}
+  .ai button:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--marker)}
+  .ai button:disabled{opacity:.6;cursor:wait}
+  .ai-explain{margin-top:26px;background:#fff6a8;padding:26px 26px 22px;transform:rotate(-.5deg);box-shadow:0 10px 20px -12px rgba(0,0,0,.35);white-space:pre-wrap;font-size:15px;line-height:1.95;position:relative}
+  .ai-explain::before{content:"AIの解説";position:absolute;top:-12px;left:20px;background:var(--ink);color:var(--marker);font-size:12px;font-weight:700;padding:0 10px;line-height:22px}
+
+  footer{margin-top:52px;border-top:2px solid var(--ink);padding-top:18px;font-size:13px;color:var(--mut)}
+  footer .links{margin-top:12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+  footer a{font-weight:700;text-decoration:none;box-shadow:inset 0 -.4em 0 var(--marker)}
+
+  @media (max-width:640px){
+    main{padding-top:28px}
+    .panel{padding:24px 16px 18px}
+    .fields{grid-template-columns:1fr 1fr;gap:14px 12px}
+    .fields .wide-sm{grid-column:span 2}
+    .sub{grid-template-columns:1fr}
+    .sub>div+div{border-left:none;border-top:2px dashed var(--grid)}
+    .hero-num{padding:22px 92px 20px 18px}
+    .stamp{width:66px;height:66px;margin-top:-33px;font-size:15px;right:14px}
+    .ai button{width:100%}
+  }
+</style>
